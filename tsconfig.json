@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "lib": ["es2018", "dom"],
+    "moduleResolution": "node",
+    "outFile": "./build/takoq.js",
+    "resolveJsonModule": true
+  }
+}

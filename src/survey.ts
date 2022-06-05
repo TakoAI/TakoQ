@@ -180,7 +180,7 @@ function drawQuesRating(qelem, question, report){
         tmp1.onclick = function(){
             setAnswer(i);
         }
-        tmp1.innerHTML = i;
+        tmp1.innerHTML = i.toString();
         qelem.appendChild(tmp1);
     }
     let tmp2 = document.createElement("text");
@@ -222,8 +222,8 @@ function drawQuesMatrix(qelem, question, report){
             let qalist = tmp.children;
             for(let j = 0; j < qalist.length; j ++){
                 let tbtm = qalist[j].children[0];
-                if(tbtm && tbtm.type == "radio" && tbtm.checked){
-                    answer['data'][i] = tbtm.value;
+                if(tbtm && tbtm['type'] == "radio" && tbtm['checked']){
+                    answer['data'][i] = tbtm['value'];
                 }
             }
             console.log(answer);
@@ -280,7 +280,7 @@ function drawQuesDropdown(qelem, question, report){
         }
         let tmp2 = document.createElement("text");
         tmp2.className = "w3-bar-item w3-button w3-border";
-        tmp2.setAttribute('value', i);
+        tmp2.setAttribute('value', i.toString());
         tmp2.innerHTML = " " + options[i];
         tmp2.onclick = setAnswer;
         tmp1.appendChild(tmp2);
@@ -295,7 +295,7 @@ function drawQuesOpen(qelem, question, report){
     let tmp0 = document.createElement("textarea");
     tmp0.className = "w3-large";
     tmp0.setAttribute("placeholder", data['text']);
-    tmp0.setAttribute("rows", 4);
+    tmp0.setAttribute("rows", "4");
     tmp0.style.width = "100%";
     tmp0.oninput = function(){
         answer['data'] = tmp0.value;
@@ -718,6 +718,7 @@ function drawQuestion(selem, question, report){
     selem.appendChild(qelem);
 }
 
+var CURRENTPAGE = 1;
 function validatePage(survey, report){
     let questions = survey['data'];
     let qlist = [];

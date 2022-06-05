@@ -49,18 +49,18 @@ function setContent(stages, stageIndex){
     content.appendChild(title);
     content.appendChild(document.createElement('hr'));
     switch(stage["brief"]){
-        case "Announce":
-            setAnnounce(content);
-            break;
-        case "Submit":
-            setSubmit(content);
-            break;
-        case "Vote":
-            setVote(content);
-            break;
-        case "Result":
-            setResult(content);
-            break;
+        // case "Announce":
+        //     setAnnounce(content);
+        //     break;
+        // case "Submit":
+        //     setSubmit(content);
+        //     break;
+        // case "Vote":
+        //     setVote(content);
+        //     break;
+        // case "Result":
+        //     setResult(content);
+        //     break;
         default:
             console.log(content);
     }
