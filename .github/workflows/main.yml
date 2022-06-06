@@ -27,17 +27,19 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       
+      # Node version setup
       - name: Setup Node
         uses: actions/setup-node@v2
         with:
           node-version: '16'
 
       # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: tsc
+      - name: Build Typescript
+        run: |
+          tsc
+          cp build/takoq.js takoq.js
 
-      # Runs a set of commands using the runners shell
-      
+      # Deploy to gh-pages
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v3
         with:
