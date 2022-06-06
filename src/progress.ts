@@ -1,11 +1,11 @@
 // progress
 
-function setProgress(stages, stageIndex){
+function setProgress(stages, stageIndex, titleString, functions){
     let progress = document.getElementById('progress');
     progress.innerHTML = "";
     progress.className = "w3-container w3-padding w3-card w3-margin";
     let title = document.createElement('h1');
-    title.innerHTML = "Unofficial AWS ProServe T-Shirt Selection Platform";
+    title.innerHTML = titleString;
     progress.appendChild(title);
     let pbarc = document.createElement('div');
     pbarc.style.overflow = "auto";
@@ -29,8 +29,8 @@ function setProgress(stages, stageIndex){
             btmp.className += " w3-disabled";
         }else{
             btmp.onclick = function(){
-                setProgress(stages, i);
-                setContent(stages, i);
+                setProgress(stages, i, titleString, functions);
+                setContent(stages, i, functions);
             }
         }
         btmp.innerHTML = stage["brief"];
@@ -39,7 +39,7 @@ function setProgress(stages, stageIndex){
     progress.appendChild(document.createElement('p'));
 }
 
-function setContent(stages, stageIndex){
+function setContent(stages, stageIndex, functions){
     let stage = stages[stageIndex];
     let content = document.getElementById('content');
     content.innerHTML = "";
@@ -48,21 +48,8 @@ function setContent(stages, stageIndex){
     title.innerHTML = stage['name'];
     content.appendChild(title);
     content.appendChild(document.createElement('hr'));
-    switch(stage["brief"]){
-        // case "Announce":
-        //     setAnnounce(content);
-        //     break;
-        // case "Submit":
-        //     setSubmit(content);
-        //     break;
-        // case "Vote":
-        //     setVote(content);
-        //     break;
-        // case "Result":
-        //     setResult(content);
-        //     break;
-        default:
-            console.log(content);
+    if(stageIndex < functions.length){
+        functions[stageIndex](content);
     }
     content.appendChild(document.createElement('p'));
 }
