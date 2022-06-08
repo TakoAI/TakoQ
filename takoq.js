@@ -1081,6 +1081,7 @@ function drawQuestion(selem, question, report) {
             console.log(question);
     }
     selem.appendChild(qelem);
+    return qelem;
 }
 var CURRENTPAGE = 1;
 function validatePage(survey, report) {
@@ -1132,7 +1133,7 @@ function drawPage(selem, survey, report) {
         ptmp.onclick = function () {
             if (validatePage(survey, report)) {
                 CURRENTPAGE = pid;
-                showPage(survey, pid);
+                showPage(survey, report, pid);
             }
         };
         ptmp.innerHTML = pid;
@@ -1153,19 +1154,49 @@ function drawSurvey(survey, report) {
         selem.appendChild(stmp);
     }
     for (let i = 0; i < questions.length; i++) {
-        drawQuestion(selem, questions[i], report);
+        let qelem = drawQuestion(selem, questions[i], report);
+        qelem.onchange = function () {
+            report;
+            showPage(survey, report, CURRENTPAGE);
+        };
     }
     let pages = getPages(survey);
     if (pages.length > 1) {
         drawPage(selem, survey, report);
     }
 }
-function showPage(survey, page) {
+function checkQuestion(q, report, clear = false) {
+    if ('condition' in q) {
+        let tid = q['condition']['id'];
+        let tdata = q['condition']['data'];
+        for (let i = 0; i < report['data'].length; i++) {
+            let rid = report['data'][i]['id'];
+            let rdata = report['data'][i]['data'];
+            console.log(tid, rid, tdata, rdata);
+            if (rid == tid && rdata == tdata) {
+                return true;
+            }
+        }
+        if (clear) {
+            for (let i = 0; i < report['data'].length; i++) {
+                let rid = report['data'][i]['id'];
+                if (rid == q['id']) {
+                    report['data'][i]['data'] = null;
+                }
+            }
+        }
+        return false;
+    }
+    else {
+        return true;
+    }
+}
+function showPage(survey, report, page) {
     let questions = survey['data'];
     for (let i = 0; i < questions.length; i++) {
         let q = questions[i];
         let qelem = document.getElementById(q['id']);
-        if (q['page'] == page) {
+        if (q['page'] == page && checkQuestion(q, report)) {
             qelem.className = "w3-container w3-card";
         }
         else {
@@ -1184,5 +1215,12 @@ function showPage(survey, page) {
                 ptmp.className = "w3-button";
             }
         }
+    }
+}
+function finalizeReport(survey, report) {
+    let questions = survey['data'];
+    for (let i = 0; i < questions.length; i++) {
+        let q = questions[i];
+        checkQuestion(q, report, true);
     }
 }
