@@ -21,30 +21,68 @@ let survey = {
         "name": "Multi Choice Question Example",
         "id": "T-0-Q-1",
         "type": "multi",
-        "text": "How do you find this website?",
+        "text": "What question type are you looking for?",
         "must": false,
         "page": 1,
         "data": {
             "selection": [{
                 "id": "0",
-                "text": "I have no idea."
+                "text": "Open Text"
             }, {
                 "id": "1",
-                "text": "I browsed throw Github."
+                "text": "Checkbox"
             }, {
                 "id": "2",
-                "text": "Others"
+                "text": "Upload File"
             }]
         }
     }, {
-        "name": "Open Test Question Example",
+        "name": "Open Text Question Example",
         "id": "T-0-Q-2",
         "type": "open",
+        "condition": {
+            "id": "T-0-Q-1",
+            "data": "0"
+        },
         "text": "Any feedback?",
         "must": false,
         "page": 1,
         "data": {
             "text": "Write your feedback here!"
+        }
+    }, {
+        "name": "Checkbox Question Example",
+        "id": "T-0-Q-3",
+        "type": "checkbox",
+        "condition": {
+            "id": "T-0-Q-1",
+            "data": "1"
+        },
+        "text": "Question description...",
+        "must": false,
+        "page": 1,
+        "data": {
+            "selection": [{
+                "id": "0",
+                "text": "Test Option 1"
+            }, {
+                "id": "1",
+                "text": "Test Option 2"
+            }]
+        }
+    }, {
+        "name": "Upload Question Example",
+        "id": "T-0-Q-4",
+        "type": "upload",
+        "condition": {
+            "id": "T-0-Q-1",
+            "data": "2"
+        },
+        "text": "Question description...",
+        "must": false,
+        "page": 1,
+        "data": {
+            "multiple": true
         }
     }]
 };
@@ -75,7 +113,7 @@ function setDescription(content){
     content.appendChild(tmp1);
     // draw
     drawSurvey(survey, report);
-    showPage(survey, CURRENTPAGE);
+    showPage(survey, report, CURRENTPAGE);
     // change context
     tmp2.onchange = function(){
         tmp5.innerHTML = JSON.stringify(report, null, 4);
