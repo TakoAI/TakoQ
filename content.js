@@ -116,7 +116,8 @@ function setDescription(content){
     showPage(survey, report, CURRENTPAGE);
     // change context
     tmp2.onchange = function(){
-        tmp5.innerHTML = JSON.stringify(report, null, 4);
+        let tmpReport = finalizeReport(survey, report);
+        tmp5.innerHTML = JSON.stringify(tmpReport, null, 4);
     }
 }
 

@@ -853,9 +853,11 @@ function showPage(survey, report, page){
 }
 
 function finalizeReport(survey, report){
+    let tmpReport = JSON.parse(JSON.stringify(report));
     let questions = survey['data'];
     for(let i = 0; i < questions.length; i ++){
         let q = questions[i];
-        checkQuestion(q, report, true);
+        checkQuestion(q, tmpReport, true);
     }
+    return tmpReport;
 }
