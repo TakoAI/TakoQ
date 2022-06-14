@@ -1173,8 +1173,28 @@ function checkQuestion(q, report, clear = false) {
             let rid = report['data'][i]['id'];
             let rdata = report['data'][i]['data'];
             console.log(tid, rid, tdata, rdata);
-            if (rid == tid && rdata == tdata) {
-                return true;
+            if (rid == tid) {
+                switch (q['condition']['type']) {
+                    case 'larger':
+                        if (rdata > tdata) {
+                            return true;
+                        }
+                        break;
+                    case 'smaller':
+                        if (rdata < tdata) {
+                            return true;
+                        }
+                        break;
+                    case 'not-equal':
+                        if (rdata != tdata) {
+                            return true;
+                        }
+                        break;
+                    default:
+                        if (rdata == tdata) {
+                            return true;
+                        }
+                }
             }
         }
         if (clear) {
